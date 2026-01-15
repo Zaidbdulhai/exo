@@ -1,7 +1,9 @@
 import argparse
 import multiprocessing as mp
 import os
-import resource
+import sys
+if sys.platform != 'win32':
+    import resource
 import signal
 from dataclasses import dataclass, field
 from typing import Self
@@ -196,8 +198,8 @@ class Node:
 
 def main():
     args = Args.parse()
-    soft, hard = resource.getrlimit(resource.RLIMIT_NOFILE)
-    resource.setrlimit(resource.RLIMIT_NOFILE, (max(soft, 65535), hard))
+    #soft, hard = resource.getrlimit(resource.RLIMIT_NOFILE)
+    #resource.setrlimit(resource.RLIMIT_NOFILE, (max(soft, 65535), hard))
 
     mp.set_start_method("spawn")
     # TODO: Refactor the current verbosity system

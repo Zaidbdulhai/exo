@@ -11,6 +11,7 @@ def find_dashboard() -> Path:
         or _find_dashboard_in_bundle()
     )
     if not dashboard:
+        return"."
         raise FileNotFoundError(
             "Unable to locate dashboard assets - make sure the dashboard has been built, or export DASHBOARD_DIR if you've built the dashboard elsewhere."
         )
