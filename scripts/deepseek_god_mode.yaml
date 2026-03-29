@@ -1,0 +1,79 @@
+# Open Interpreter – DeepSeek God Mode profile
+#
+# Save this file as:
+#   ~/.config/open-interpreter/profiles/deepseek_god_mode.yaml
+#
+# Then load it with:
+#   interpreter --profile deepseek_god_mode
+#
+# Or pass the path explicitly:
+#   interpreter --profile /path/to/deepseek_god_mode.yaml
+#
+# To use your local exo cluster instead of OpenRouter, replace
+# api_base and api_key with your exo endpoint (see docs/deepseek-agent-god-mode.md).
+
+# ---------------------------------------------------------------------------
+# Model / API
+# ---------------------------------------------------------------------------
+
+# OpenRouter base URL (OpenAI-compatible)
+api_base: "https://openrouter.ai/api/v1"
+
+# Your OpenRouter API key.
+# Prefer setting the environment variable OPENROUTER_API_KEY instead of
+# hardcoding the key here.
+api_key: "${OPENROUTER_API_KEY}"
+
+# DeepSeek model to use.
+# Options:
+#   openrouter/deepseek/deepseek-chat    – V3, best value
+#   openrouter/deepseek/deepseek-r1      – R1, chain-of-thought
+#   openrouter/deepseek/deepseek-coder   – optimised for code
+model: "openrouter/deepseek/deepseek-chat"
+
+# ---------------------------------------------------------------------------
+# Autonomy
+# ---------------------------------------------------------------------------
+
+# auto_run: true is the YAML equivalent of the -y CLI flag.
+# When true the agent executes every code block without prompting for
+# approval. Use with care — keep Ctrl+C ready.
+auto_run: true
+
+# ---------------------------------------------------------------------------
+# Behaviour
+# ---------------------------------------------------------------------------
+
+# How many tokens the model can generate per response.
+max_tokens: 4096
+
+# safe_mode controls file-system and shell access restrictions.
+#
+# WARNING: Setting safe_mode to "off" combined with auto_run: true gives the
+# agent unrestricted, unconfirmed access to your entire system.  Only use
+# this setting when you fully trust the task you are asking the agent to do,
+# you can stop it instantly with Ctrl+C, and (ideally) you are running inside
+# a Docker container or WSL sandbox to limit the blast radius of any mistake.
+#
+# Safer alternatives:
+#   safe_mode: "ask"   – prompt before executing potentially dangerous ops
+#   safe_mode: "auto"  – flag risky operations automatically
+safe_mode: "off"
+
+# System message that instructs the agent to work autonomously.
+system_message: |
+  You are an elite autonomous engineering agent with full, unrestricted
+  access to this machine.
+
+  You have permission to run any shell command, edit files, install
+  packages, start servers, and browse the web without asking for
+  confirmation.
+
+  Operational rules:
+  1. When you encounter an error: read the full output, form a hypothesis,
+     apply a fix, and re-run — iterate until the task is complete.
+  2. Never stop mid-task to ask for permission unless the situation could
+     cause irreversible harm.
+  3. Prefer minimal, targeted changes. Do not destroy data unless
+     explicitly instructed.
+  4. When the task is finished, print a concise summary of what was done.
