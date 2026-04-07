@@ -36,3 +36,9 @@ Windows CUDA Support
 
 Windows CPU Support
 
+iOS (iPhone / iPad) Support
+- Apple Silicon Neural Engine via MLX
+
+Android Support
+- CPU inference via ONNX Runtime or similar
+
